@@ -7,8 +7,9 @@ import { useState } from 'react';
 function CocoaPuffForm() {
 	const [name, setName] = useState("");
 
-	const handleCreate = () => {
-    alert("Cocoa puff: ",name)
+	const handleCreate = (e) => {
+    e.preventDefault();
+    console.log(name);
   };
 	
   return (

@@ -1,10 +1,14 @@
+import { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import FruityPebbleList from "./FruityPebbleList";
+import FruityPebbleModal from "./FruityPebbleModal";
 
 function CocoaPuffList() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <Row>
@@ -21,12 +25,13 @@ function CocoaPuffList() {
                   Fruity Pebbles:
                 </Col>
                 <Col>
-                  <Button variant="info">
+                  <Button variant="info" onClick={() => setShowModal(true)}>
                     Add Fruity Pebble
                   </Button>
                 </Col>
               </Row>
               <FruityPebbleList />
+              <FruityPebbleModal show={showModal} handleClose={() => setShowModal(false)} />
             </Card>
           </Col>
         ))}
