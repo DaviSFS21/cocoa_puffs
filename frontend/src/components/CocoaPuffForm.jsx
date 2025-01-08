@@ -9,7 +9,25 @@ function CocoaPuffForm() {
 
 	const handleCreate = (e) => {
     e.preventDefault();
-    console.log(name);
+
+    fetch("http://localhost:3000/api/cocoa_puffs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(
+        { name, archived: false },
+      ),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("CocoaPuff criado:", data);
+        alert("CocoaPuff criado com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Erro ao criar CocoaPuff:", error);
+        alert("Erro ao criar CocoaPuff");
+      });
   };
 	
   return (
@@ -20,14 +38,17 @@ function CocoaPuffForm() {
 						type="text"
 						value={name}
 						placeholder="Type Cocoa Puff name"
-						style={{ width: "400px" }}
+						style={{ width: "25em" }}
 						onChange={(e) => setName(e.target.value)}
 						/>
 				</Col>
 				<Col>
-					<Button variant="info" type="submit">
+					<Button variant="info" type="submit" style={{ width: "10em" }}>
 						Add Cocoa Puff
 					</Button>
+				</Col>
+				<Col>
+					
 				</Col>
 			</Row>
 		</Form>
