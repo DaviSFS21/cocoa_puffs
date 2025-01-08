@@ -2,7 +2,7 @@ class Api::CocoaPuffsController < ApplicationController
   before_action :set_cocoa_puff, only: %i[ update ]
 
   def index
-    render json: CocoaPuff.where(archived: false)
+    render json: CocoaPuff.where(archived: false).order(id: :asc)
   end
  
   def create
