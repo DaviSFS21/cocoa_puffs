@@ -1,29 +1,27 @@
 class Api::CocoaPuffsController < ApplicationController
-  before_action :set_cocoa_puff, only: %i[ show update destroy ]
+  before_action :set_cocoa_puff, only: %i[ update ]
 
   def index
     render json: CocoaPuff.where(archived: false)
   end
-
-=begin   
+ 
   def create
     @cocoa_puff = CocoaPuff.new(cocoa_puff_params)
 
     if @cocoa_puff.save
-      render :show, status: :created, location: @cocoa_puff
+      render json: @cocoa_puff, status: :created, location: api_cocoa_puff_url(@cocoa_puff)
     else
       render json: @cocoa_puff.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    if @cocoa_puff.update(cocoa_puff_params)
-      render :show, status: :ok, location: @cocoa_puff
+    if @cocoa_puff.update(cocoa_puff_archived)
+      render json: @cocoa_puff, status: :ok, location: api_cocoa_puff_url(@cocoa_puff)
     else
       render json: @cocoa_puff.errors, status: :unprocessable_entity
     end
   end 
-=end
 
   private
     def set_cocoa_puff
@@ -32,5 +30,9 @@ class Api::CocoaPuffsController < ApplicationController
 
     def cocoa_puff_params
       params.expect(cocoa_puff: [ :name ])
+    end
+    
+    def cocoa_puff_archived
+      params.expect(cocoa_puff: [ :archived ])
     end
 end
