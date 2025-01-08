@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import PropTypes from 'prop-types';
 import Alert from 'react-bootstrap/Alert';
 
-const FruityPebbleModal = ({ show, handleClose, CocoaPuffID }) => {
+const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 	const [name, setName] = useState("");
   const [pebbleCount, setPebbleCount] = useState(0);
   const [allowSubmit, setAllowSubmit] = useState(false);
@@ -13,14 +13,15 @@ const FruityPebbleModal = ({ show, handleClose, CocoaPuffID }) => {
   const handleCreate = (e) => {
 		e.preventDefault();
 	
-		fetch(`http://localhost:3000/api/cocoa_puffs/${CocoaPuffID}/fruity_pebbles`, {
+		fetch(`http://localhost:3000/api/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: CocoaPuffID }),
+			body: JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: parseInt(cocoaPuffID) }),
 		})
 			.then((response) => {
+        console.log(JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: parseInt(cocoaPuffID) }))
 				if (!response.ok) {
 					return response.json().then((err) => {
 						throw new Error(err.message || "Erro ao criar Fruity Pebble");
@@ -46,7 +47,7 @@ const FruityPebbleModal = ({ show, handleClose, CocoaPuffID }) => {
 
   return <Modal centered show={show} onHide={handleClose}>
     <Modal.Header>
-      <Modal.Title>Create Fruity Pebble</Modal.Title>
+      <Modal.Title>Create Fruity Pebble on Cocoa Puff {cocoaPuffID}</Modal.Title>
     </Modal.Header>
 
     <Modal.Body>
@@ -55,18 +56,20 @@ const FruityPebbleModal = ({ show, handleClose, CocoaPuffID }) => {
         type="text"
         placeholder="Type Fruity Pebble name"
         onChange={(e) => setName(e.target.value)}
+        required
         />
         <Form.Control
         type="number"
         placeholder="Type the pebble count, less than 10"
         max="10"
         onChange={checkCount}
+        required
         />
         <div style={{ display: "flex", gap: "12px" }}>
           <Button variant="danger" onClick={handleClose}>
             Cancel
           </Button>
-          <Button disabled={allowSubmit} variant="info" type="submit" onClick={handleClose}>
+          <Button disabled={allowSubmit} variant="info" type="submit">
             Add Fruity Pebble
           </Button>
           <Alert variant="warning" show={allowSubmit}>
@@ -81,7 +84,7 @@ const FruityPebbleModal = ({ show, handleClose, CocoaPuffID }) => {
 FruityPebbleModal.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  CocoaPuffID: PropTypes.number.isRequired
+  cocoaPuffID: PropTypes.number.isRequired
 };
 
 export default FruityPebbleModal;
