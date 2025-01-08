@@ -8,7 +8,7 @@ class Api::FruityPebblesController < ApplicationController
     @fruity_pebble = FruityPebble.new(fruity_pebble_params)
 
     if @fruity_pebble.save
-      render json: @fruity_pebble, status: :created, location: @fruity_pebble
+      render json: @fruity_pebble, status: :created, location: api_cocoa_puff_fruity_pebbles_url(cocoa_puff_id: 1)
     else
       render json: @fruity_pebble.errors, status: :unprocessable_entity
     end
@@ -20,6 +20,6 @@ class Api::FruityPebblesController < ApplicationController
     end
 
     def fruity_pebble_params
-      params.expect([ :name, :pebble_count, :cocoa_puff_id ])
+      params.permit([ :name, :pebble_count, :cocoa_puff_id ])
     end
 end
