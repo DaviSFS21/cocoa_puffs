@@ -80,7 +80,7 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
             Add Fruity Pebble
           </Button>
           <Alert variant="warning" show={allowSubmit}>
-            Count might be less than 10
+            Pebble count might be less than 10
           </Alert>
           <Alert key="warning"
             variant="warning"
