@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     resources :cocoa_puffs, only: [ :index, :create, :update ] do
-      resources :fruity_pebbles, only: [ :show, :create ]
+      resources :fruity_pebbles, only: [ :index, :create ]
     end
   end
 
