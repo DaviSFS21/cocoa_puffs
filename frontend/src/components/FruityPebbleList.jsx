@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import PropTypes from 'prop-types';
 
-function FruityPebbleList({ CocoaPuffID }) {
+function FruityPebbleList({ cocoaPuffID }) {
   const [fruityPebbles, setFruityPebbles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (CocoaPuffID) {
-      fetch(`http://localhost:3000/api/cocoa_puffs/${CocoaPuffID}/fruity_pebbles`)
+    if (cocoaPuffID) {
+      fetch(`http://localhost:3000/api/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Erro ao buscar Fruity Pebbles");
@@ -26,7 +26,7 @@ function FruityPebbleList({ CocoaPuffID }) {
           setLoading(false);
         });
     }
-  }, [CocoaPuffID]); // Atualiza os dados sempre que CocoaPuffID mudar
+  }, [cocoaPuffID]);
 
   if (loading) {
     return <p>Carregando Fruity Pebbles...</p>;
@@ -45,8 +45,8 @@ function FruityPebbleList({ CocoaPuffID }) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nome</th>
-              <th>Quantidade</th>
+              <th>Name</th>
+              <th>Pebble Count</th>
             </tr>
           </thead>
           <tbody>
@@ -65,7 +65,7 @@ function FruityPebbleList({ CocoaPuffID }) {
 }
 
 FruityPebbleList.propTypes = {
-  CocoaPuffID: PropTypes.number.isRequired,
+  cocoaPuffID: PropTypes.number.isRequired,
 };
 
 export default FruityPebbleList

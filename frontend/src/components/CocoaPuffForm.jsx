@@ -45,29 +45,33 @@ function CocoaPuffForm() {
 	};	
 	
   return (
-		<Form onSubmit={handleCreate} style={{ display: "flex", gap: "12px" }}>
+		<div style={{ display: "grid", gap: "12px" }}>
+			<Form onSubmit={handleCreate} style={{ display: "flex", gap: "12px" }}>
+				<Row>
+					<Col>
+						<Form.Control 
+							type="text"
+							value={name}
+							placeholder="Type Cocoa Puff name"
+							style={{ width: "25em" }}
+							onChange={(e) => setName(e.target.value)}
+							/>
+					</Col>
+					<Col>
+						<Button variant="info" type="submit" style={{ width: "10em" }}>
+							Add Cocoa Puff
+						</Button>
+					</Col>
+				</Row>
+			</Form>
 			<Row>
 				<Col>
-					<Form.Control 
-						type="text"
-						value={name}
-						placeholder="Type Cocoa Puff name"
-						style={{ width: "25em" }}
-						onChange={(e) => setName(e.target.value)}
-						/>
-				</Col>
-				<Col>
-					<Button variant="info" type="submit" style={{ width: "10em" }}>
-						Add Cocoa Puff
-					</Button>
-				</Col>
-				<Col>
-					<Alert key="warning" variant="warning" show={alertState}>
+					<Alert key="warning" variant="warning" show={alertState} style={{ width: "250px" }}>
 						{alertMessage}
 					</Alert>
 				</Col>
 			</Row>
-		</Form>
+		</div>
   )
 }
 

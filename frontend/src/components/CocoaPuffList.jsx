@@ -12,7 +12,8 @@ function CocoaPuffList() {
   const [cocoaPuffs, setCocoaPuffs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [alertState, setAlertState] = useState(false)
+  const [alertState, setAlertState] = useState(false);
+  const [cocoaPuffID, setCocoaPuffID] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/cocoa_puffs")
@@ -86,7 +87,7 @@ function CocoaPuffList() {
       ) : (
         <Row>
           {cocoaPuffs.filter(cocoaPuff => !cocoaPuff.archived).map((cocoaPuff) => (
-            <Col key={cocoaPuff.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
+            <Col key={cocoaPuff.id} sm={12} md={6} lg={4} xl={3} className="mb-4">
               <Card style={{ padding: "20px", borderRadius: "20px" }}>
                 <Row>
                   <Col>
@@ -98,16 +99,19 @@ function CocoaPuffList() {
                     Fruity Pebbles:
                   </Col>
                   <Col>
-                    <Button variant="info" onClick={() => setShowModal(true)}>
+                    <Button variant="info" onClick={() => {
+                      setShowModal(true);
+                      setCocoaPuffID(cocoaPuff.id);
+                    }}>
                       Add Fruity Pebble
                     </Button>
                   </Col>
                 </Row>
-                <FruityPebbleList CocoaPuffID={cocoaPuff.id} />
-                <FruityPebbleModal show={showModal} handleClose={() => setShowModal(false)} />
+                <FruityPebbleList cocoaPuffID={cocoaPuff.id} />
               </Card>
             </Col>
           ))}
+          <FruityPebbleModal show={showModal} handleClose={() => setShowModal(false)} cocoaPuffID={cocoaPuffID} />
         </Row>
       )}
     </>
