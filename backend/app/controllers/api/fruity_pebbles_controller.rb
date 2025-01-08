@@ -1,5 +1,5 @@
 class Api::FruityPebblesController < ApplicationController
-  def show
+  def index
     cocoa_puff = CocoaPuff.find(params[:cocoa_puff_id])
     render json: cocoa_puff.fruity_pebbles.all
   end
@@ -20,6 +20,6 @@ class Api::FruityPebblesController < ApplicationController
     end
 
     def fruity_pebble_params
-      params.expect(fruity_pebble: [ :name, :pebble_count, :cocoa_puff_id ])
+      params.expect([ :name, :pebble_count, :cocoa_puff_id ])
     end
 end
