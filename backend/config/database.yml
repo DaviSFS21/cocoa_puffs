@@ -9,3 +9,7 @@ default: &default
 development:
   <<: *default
   database: cocoa_puffs_development
+
+test:
+  <<: *default
+  database: cocoa_puffs_test
