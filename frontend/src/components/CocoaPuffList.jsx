@@ -103,7 +103,7 @@ function CocoaPuffList() {
                     </Button>
                   </Col>
                 </Row>
-                <FruityPebbleList />
+                <FruityPebbleList CocoaPuffID={cocoaPuff.id} />
                 <FruityPebbleModal show={showModal} handleClose={() => setShowModal(false)} />
               </Card>
             </Col>
