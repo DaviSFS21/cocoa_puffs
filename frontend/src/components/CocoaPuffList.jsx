@@ -68,7 +68,6 @@ function CocoaPuffList() {
       });
   };
   
-  // Renderização condicional baseada no estado
   if (loading) {
     return <p>Carregando CocoaPuffs...</p>;
   }

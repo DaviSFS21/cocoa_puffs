@@ -9,6 +9,8 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 	const [name, setName] = useState("");
   const [pebbleCount, setPebbleCount] = useState(0);
   const [allowSubmit, setAllowSubmit] = useState(false);
+  const [alertState, setAlertState] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleCreate = (e) => {
 		e.preventDefault();
@@ -18,13 +20,13 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: parseInt(cocoaPuffID) }),
+			body: JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: cocoaPuffID }),
 		})
 			.then((response) => {
-        console.log(JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: parseInt(cocoaPuffID) }))
+        console.log(JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: cocoaPuffID }))
 				if (!response.ok) {
 					return response.json().then((err) => {
-						throw new Error(err.message || "Erro ao criar Fruity Pebble");
+						throw new Error(err.errors ? err.errors.join(", ") : "Erro ao criar Fruity Pebble");
 					});
 				}
 				return response.json();
@@ -35,7 +37,12 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 				window.location.reload();
 			})
 			.catch((error) => {
-				console.error("Erro ao criar Fruity Pebble:", error);
+        setAlertMessage(error.message || "Erro ao criar CocoaPuff");
+        setAlertState(true);
+
+        setTimeout(() => {
+          setAlertState(false);
+        }, 3000);
 			});
 	};
 
@@ -74,6 +81,14 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
           </Button>
           <Alert variant="warning" show={allowSubmit}>
             Count might be less than 10
+          </Alert>
+          <Alert key="warning"
+            variant="warning"
+            show={alertState}
+            style={{ marginBottom: "0" }}
+            className="shadow-lg"
+            >
+            {alertMessage}
           </Alert>
         </div>
       </Form>

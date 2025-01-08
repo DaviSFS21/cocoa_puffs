@@ -11,7 +11,7 @@ class Api::CocoaPuffsController < ApplicationController
     if @cocoa_puff.save
       render json: @cocoa_puff, status: :created, location: api_cocoa_puff_url(@cocoa_puff)
     else
-      render json: @cocoa_puff.errors, status: :unprocessable_entity
+      render json: { errors: @cocoa_puff.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

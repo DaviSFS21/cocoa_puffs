@@ -10,7 +10,7 @@ class Api::FruityPebblesController < ApplicationController
     if @fruity_pebble.save
       render json: @fruity_pebble, status: :created, location: api_cocoa_puff_fruity_pebbles_url(cocoa_puff_id: 1)
     else
-      render json: @fruity_pebble.errors, status: :unprocessable_entity
+      render json: { errors: @fruity_pebble.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
