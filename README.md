@@ -1,4 +1,4 @@
-# cocoa_puffs
+# Cocoa Puffs Manager
 
 ## Overview
 This project is a Ruby on Rails application, with its frontend made with React.
