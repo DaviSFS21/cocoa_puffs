@@ -1,9 +1,9 @@
 # cocoa_puffs
 
 ## Overview
-This project is a Ruby on Rails application, with frontend using React.
+This project is a Ruby on Rails application, with its frontend made with React.
 The application manages Cocoa Puff lists and its Fruity Pebbles.
-It uses PostgreSQL as the database, and Rails as an API for data.
+It leverages PostgreSQL as the database, and Rails as an API for data.
 
 ## Prerequisites
 * Ruby
@@ -56,8 +56,8 @@ rails db:create
 rails db:migrate
 ```
 
-4. **Start both React and Rails servers:** Using the terminal, access backend directory and serve the Rails API.
-Using another terminal, access frontend directory and serve the React page.
+4. **Start both React and Rails servers:** Run these commands in the terminal, access backend directory and start the Rails API server.
+In another terminal, navigate to the frontend directory and start the React server.
 ```
 cd .\backend\
 rails s
