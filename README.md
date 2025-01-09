@@ -73,3 +73,12 @@ http://localhost:5173
 ```
 
 ***Now that we have both backend and frontend services being executed, enjoy the application!***
+
+## Test Units
+### *After running this application, you should execute the test units created to validate both Cocoa Puff and Fruity Pebble models.*
+* **Using your terminal, navigate to the backend directory and execute RSpec.**
+```
+cd .\backend\
+bundle exec rspec
+```
+
