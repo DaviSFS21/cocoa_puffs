@@ -12,7 +12,7 @@ function FruityPebbleList({ cocoaPuffID }) {
       fetch(`http://localhost:3000/api/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`)
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Erro ao buscar Fruity Pebbles");
+            throw new Error("Error fetching Fruity Pebbles");
           }
           return response.json();
         })
@@ -29,11 +29,11 @@ function FruityPebbleList({ cocoaPuffID }) {
   }, [cocoaPuffID]);
 
   if (loading) {
-    return <p>Carregando Fruity Pebbles...</p>;
+    return <p>Loading Fruity Pebbles...</p>;
   }
 
   if (error) {
-    return <p>Erro: {error}</p>;
+    return <p>Error: {error}</p>;
   }
 
   return (

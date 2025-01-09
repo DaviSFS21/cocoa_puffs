@@ -26,18 +26,18 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
         console.log(JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: cocoaPuffID }))
 				if (!response.ok) {
 					return response.json().then((err) => {
-						throw new Error(err.errors ? err.errors.join(", ") : "Erro ao criar Fruity Pebble");
+						throw new Error(err.errors ? err.errors.join(", ") : "Error creating Fruity Pebble");
 					});
 				}
 				return response.json();
 			})
 			.then((data) => {
-				console.log("Fruity Pebble criado:", data);
+				console.log("Fruity Pebble created:", data);
 
 				window.location.reload();
 			})
 			.catch((error) => {
-        setAlertMessage(error.message || "Erro ao criar CocoaPuff");
+        setAlertMessage(error.message || "Error creating Cocoa Puff");
         setAlertState(true);
 
         setTimeout(() => {

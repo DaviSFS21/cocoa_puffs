@@ -19,7 +19,7 @@ function CocoaPuffList() {
     fetch("http://localhost:3000/api/cocoa_puffs")
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Erro ao buscar CocoaPuffs");
+          throw new Error("Error fetching CocoaPuffs");
         }
         return response.json();
       })
@@ -36,7 +36,7 @@ function CocoaPuffList() {
 
   const handleArchive = (id) => {
     if (!id) {
-      alert("Crie um CocoaPuff primeiro ou forneça um ID válido.");
+      alert("Create a Cocoa Puff and provide a valid ID.");
       return;
     }
 
@@ -49,7 +49,7 @@ function CocoaPuffList() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("CocoaPuff arquivado:", data);
+        console.log("CocoaPuff archived:", data);
 
         setCocoaPuffs((prevCocoaPuffs) =>
           prevCocoaPuffs.map((cocoaPuff) =>
@@ -63,36 +63,36 @@ function CocoaPuffList() {
         }, 3000);
       })
       .catch((error) => {
-        console.error("Erro ao arquivar CocoaPuff:", error);
-        alert("Erro ao arquivar CocoaPuff");
+        console.error("Error archiving CocoaPuff:", error);
+        alert("Error archiving CocoaPuff");
       });
   };
   
   if (loading) {
-    return <p>Carregando CocoaPuffs...</p>;
+    return <p>Loading Cocoa Puffs...</p>;
   }
 
   if (error) {
-    return <p>Erro: {error}</p>;
+    return <p>Error: {error}</p>;
   }
 
   return (
     <>
     <Alert key="warning" variant="warning" show={alertState}>
-      The CocoaPuff has been archived!
+      The Cocoa Puff has been archived!
     </Alert>
     {cocoaPuffs.length === 0 ? (
-        <p>Nenhum CocoaPuff encontrado.</p>
+        <p>No Cocoa Puffs were found...</p>
       ) : (
         <Row>
           {cocoaPuffs.filter(cocoaPuff => !cocoaPuff.archived).map((cocoaPuff) => (
             <Col key={cocoaPuff.id} sm={12} md={6} lg={4} xl={3} className="mb-4">
-              <Card style={{ padding: "20px", borderRadius: "20px" }}>
+              <Card className="border-info" style={{ padding: "20px", borderRadius: "20px" }}>
                 <Row>
                   <Col>
                     Cocoa Puff {cocoaPuff.id}: {cocoaPuff.name}<br />
                     <a href="#" onClick={() => handleArchive(cocoaPuff.id)}>
-                      Arquivar
+                      Archive
                     </a>
                     <br />
                     Fruity Pebbles:

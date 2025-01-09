@@ -23,19 +23,19 @@ function CocoaPuffForm() {
       .then((response) => {
         if (!response.ok) {
           return response.json().then((err) => {
-            throw new Error(err.errors ? err.errors.join(", ") : "Erro ao criar CocoaPuff");
+            throw new Error(err.errors ? err.errors.join(", ") : "Error creating CocoaPuff");
           });
         }
         return response.json();
       })
       .then((data) => {
-        console.log("CocoaPuff criado:", data);
+        console.log("CocoaPuff created:", data);
 
         setName("");
         window.location.reload();
       })
       .catch((error) => {
-        setAlertMessage(error.message || "Erro ao criar CocoaPuff");
+        setAlertMessage(error.message || "Error creating CocoaPuff");
         setAlertState(true);
 
         setTimeout(() => {
@@ -53,6 +53,7 @@ function CocoaPuffForm() {
               type="text"
               value={name}
               placeholder="Type Cocoa Puff name"
+              className="border-info"
               style={{ width: "300px" }}
               onChange={(e) => setName(e.target.value)}
               required
