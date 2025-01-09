@@ -14,7 +14,7 @@ It leverages PostgreSQL as the database, and Rails as an API for data.
 * VSCode, Intellij IDEA or any other IDE
 
 ## Getting started
-### These are some inital steps to serve this application in your own machine.
+### *These are some inital steps to serve this application in your own machine.*
 
 1. **Install npm dependencies and Rails:** Using the terminal, access the backend directory, install the gems.
 Then, access the frontend directory and install npm dependencies.
