@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -6,6 +6,14 @@ import Card from "react-bootstrap/Card";
 import FruityPebbleList from "./FruityPebbleList";
 import FruityPebbleModal from "./FruityPebbleModal";
 import Alert from 'react-bootstrap/Alert';
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
 function CocoaPuffList() {
   const [showModal, setShowModal] = useState(false);
@@ -16,16 +24,14 @@ function CocoaPuffList() {
   const [cocoaPuffID, setCocoaPuffID] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/cocoa_puffs")
-      .then((response) => {
-        if (!response.ok) {
+    axiosInstance.get("/cocoa_puffs")
+      .then(response => {
+        if(response.status !== 200) {
           throw new Error("Error fetching CocoaPuffs");
+        } else {
+          setCocoaPuffs(response.data);
+          setLoading(false);
         }
-        return response.json();
-      })
-      .then((data) => {
-        setCocoaPuffs(data);
-        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
@@ -34,26 +40,19 @@ function CocoaPuffList() {
       });
   }, []);
 
-  const handleArchive = (id) => {
+  const handleArchive = (id, data) => {
     if (!id) {
       alert("Create a Cocoa Puff and provide a valid ID.");
       return;
     }
 
-    fetch(`http://localhost:3000/api/cocoa_puffs/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ archived: true }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("CocoaPuff archived:", data);
+    axiosInstance.patch(`/cocoa_puffs/${id}`, data)
+      .then((response) => {
+        console.log("CocoaPuff archived:", response.data);
 
         setCocoaPuffs((prevCocoaPuffs) =>
           prevCocoaPuffs.map((cocoaPuff) =>
-            cocoaPuff.id === id ? { ...cocoaPuff, archived: true } : cocoaPuff
+            cocoaPuff.id === id ? {...cocoaPuff, archived: true} : cocoaPuff
           )
         );
 
@@ -67,7 +66,7 @@ function CocoaPuffList() {
         alert("Error archiving CocoaPuff");
       });
   };
-  
+
   if (loading) {
     return <p>Loading Cocoa Puffs...</p>;
   }
@@ -78,23 +77,23 @@ function CocoaPuffList() {
 
   return (
     <>
-    <Alert key="warning" variant="warning" show={alertState}>
-      The Cocoa Puff has been archived!
-    </Alert>
-    {cocoaPuffs.length === 0 ? (
+      <Alert key="warning" variant="warning" show={alertState}>
+        The Cocoa Puff has been archived!
+      </Alert>
+      {cocoaPuffs.length === 0 ? (
         <p>No Cocoa Puffs were found...</p>
       ) : (
         <Row>
           {cocoaPuffs.filter(cocoaPuff => !cocoaPuff.archived).map((cocoaPuff) => (
             <Col key={cocoaPuff.id} sm={12} md={6} lg={4} xl={3} className="mb-4">
-              <Card className="border-info" style={{ padding: "20px", borderRadius: "20px" }}>
+              <Card className="border-info" style={{padding: "20px", borderRadius: "20px"}}>
                 <Row>
                   <Col>
-                    Cocoa Puff {cocoaPuff.id}: {cocoaPuff.name}<br />
-                    <a href="#" onClick={() => handleArchive(cocoaPuff.id)}>
+                    Cocoa Puff {cocoaPuff.id}: {cocoaPuff.name}<br/>
+                    <a href="#" onClick={(e) => { e.preventDefault(); handleArchive(cocoaPuff.id, { archived: true }); }}>
                       Archive
                     </a>
-                    <br />
+                    <br/>
                     Fruity Pebbles:
                   </Col>
                   <Col>
@@ -106,11 +105,11 @@ function CocoaPuffList() {
                     </Button>
                   </Col>
                 </Row>
-                <FruityPebbleList cocoaPuffID={cocoaPuff.id} />
+                <FruityPebbleList cocoaPuffID={cocoaPuff.id}/>
               </Card>
             </Col>
           ))}
-          <FruityPebbleModal show={showModal} handleClose={() => setShowModal(false)} cocoaPuffID={cocoaPuffID} />
+          <FruityPebbleModal show={showModal} handleClose={() => setShowModal(false)} cocoaPuffID={cocoaPuffID}/>
         </Row>
       )}
     </>
