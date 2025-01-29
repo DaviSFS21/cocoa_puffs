@@ -6,14 +6,7 @@ import Card from "react-bootstrap/Card";
 import FruityPebbleList from "./FruityPebbleList";
 import FruityPebbleModal from "./FruityPebbleModal";
 import Alert from 'react-bootstrap/Alert';
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-})
+import axiosInstance from "../services/axiosInstance.js";
 
 function CocoaPuffList() {
   const [showModal, setShowModal] = useState(false);

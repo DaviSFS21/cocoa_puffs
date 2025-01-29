@@ -4,14 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
-import axios from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-})
+import axiosInstance from "../services/axiosInstance.js";
 
 function CocoaPuffForm() {
   const [name, setName] = useState("");

@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import PropTypes from 'prop-types';
-import axios from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-})
+import axiosInstance from "../services/axiosInstance.js";
 
 function FruityPebbleList({ cocoaPuffID }) {
   const [fruityPebbles, setFruityPebbles] = useState([]);
@@ -74,4 +67,4 @@ FruityPebbleList.propTypes = {
   cocoaPuffID: PropTypes.number.isRequired,
 };
 
-export default FruityPebbleList
+export default FruityPebbleList;

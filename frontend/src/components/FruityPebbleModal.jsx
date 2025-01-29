@@ -4,14 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import PropTypes from 'prop-types';
 import Alert from 'react-bootstrap/Alert';
-import axios from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import axiosInstance from "../services/axiosInstance.js";
 
 const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 	const [name, setName] = useState("");
