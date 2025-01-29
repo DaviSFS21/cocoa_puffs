@@ -4,6 +4,14 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import PropTypes from 'prop-types';
 import Alert from 'react-bootstrap/Alert';
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 	const [name, setName] = useState("");
@@ -14,36 +22,28 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 
   const handleCreate = (e) => {
 		e.preventDefault();
-	
-		fetch(`http://localhost:3000/api/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: cocoaPuffID }),
-		})
-			.then((response) => {
-        console.log(JSON.stringify({ name, pebble_count: pebbleCount, cocoa_puff_id: cocoaPuffID }))
-				if (!response.ok) {
-					return response.json().then((err) => {
-						throw new Error(err.errors ? err.errors.join(", ") : "Error creating Fruity Pebble");
-					});
-				}
-				return response.json();
-			})
-			.then((data) => {
-				console.log("Fruity Pebble created:", data);
 
-				window.location.reload();
-			})
-			.catch((error) => {
+    axiosInstance.post(`/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`, { name, pebble_count: pebbleCount })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((err) => {
+            throw new Error(err.errors ? err.errors.join(", ") : "Error creating Fruity Pebble");
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fruity Pebble created:", data);
+        window.location.reload();
+      })
+      .catch((error) => {
         setAlertMessage(error.message || "Error creating Cocoa Puff");
         setAlertState(true);
 
         setTimeout(() => {
           setAlertState(false);
         }, 3000);
-			});
+      });
 	};
 
   const checkCount = (event) => {

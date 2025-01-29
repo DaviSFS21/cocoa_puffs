@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import PropTypes from 'prop-types';
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
 function FruityPebbleList({ cocoaPuffID }) {
   const [fruityPebbles, setFruityPebbles] = useState([]);
@@ -9,16 +17,14 @@ function FruityPebbleList({ cocoaPuffID }) {
 
   useEffect(() => {
     if (cocoaPuffID) {
-      fetch(`http://localhost:3000/api/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error fetching Fruity Pebbles");
+      axiosInstance.get(`/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`)
+        .then(response => {
+          if(response.status !== 200) {
+            throw new Error("Error fetching CocoaPuffs");
+          } else {
+            setFruityPebbles(response.data);
+            setLoading(false);
           }
-          return response.json();
-        })
-        .then((data) => {
-          setFruityPebbles(data);
-          setLoading(false);
         })
         .catch((err) => {
           console.error(err);

@@ -4,6 +4,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
 function CocoaPuffForm() {
   const [name, setName] = useState("");
@@ -13,29 +21,15 @@ function CocoaPuffForm() {
   const handleCreate = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:3000/api/cocoa_puffs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, archived: false }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((err) => {
-            throw new Error(err.errors ? err.errors.join(", ") : "Error creating CocoaPuff");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("CocoaPuff created:", data);
-
+    axiosInstance.post("/cocoa_puffs", { name, archived: false })
+      .then(response => {
+        console.log("CocoaPuff created:", response.data);
         setName("");
         window.location.reload();
       })
-      .catch((error) => {
-        setAlertMessage(error.message || "Error creating CocoaPuff");
+      .catch((err) => {
+        console.error(err);
+        setAlertMessage(err.message || "Error creating CocoaPuff");
         setAlertState(true);
 
         setTimeout(() => {
