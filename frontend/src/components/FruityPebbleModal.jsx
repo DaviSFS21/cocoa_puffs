@@ -17,7 +17,7 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
 		e.preventDefault();
 
     axiosInstance.post(`/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`, { name, pebble_count: pebbleCount })
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
           return response.json().then((err) => {
             throw new Error(err.errors ? err.errors.join(", ") : "Error creating Fruity Pebble");
@@ -27,10 +27,12 @@ const FruityPebbleModal = ({ show, handleClose, cocoaPuffID }) => {
       })
       .then((data) => {
         console.log("Fruity Pebble created:", data);
+        setName("");
         window.location.reload();
       })
-      .catch((error) => {
-        setAlertMessage(error.message || "Error creating Cocoa Puff");
+      .catch((err) => {
+        console.error(err);
+        setAlertMessage(err.message || "Error creating Fruity Pebble");
         setAlertState(true);
 
         setTimeout(() => {

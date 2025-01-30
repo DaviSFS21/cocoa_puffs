@@ -13,7 +13,7 @@ function FruityPebbleList({ cocoaPuffID }) {
       axiosInstance.get(`/cocoa_puffs/${cocoaPuffID}/fruity_pebbles`)
         .then(response => {
           if(response.status !== 200) {
-            throw new Error("Error fetching CocoaPuffs");
+            throw new Error("Error fetching Fruity Pebbles");
           } else {
             setFruityPebbles(response.data);
             setLoading(false);
